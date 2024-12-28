@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <title>乐逛工作台</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://ai-public.mastergo.com/gen_page/tailwind-custom.css" rel="stylesheet" />
+  <script
+    src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: '#1B9AF5' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }
+  </script>
+<link rel="icon" href="./img/icon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-gray-50 min-h-[1024px]">
+  <div class="w-[1440px] mx-auto flex flex-col items-center justify-center min-h-screen py-20">
+    <div class="w-full px-20">
+      <h1 class="text-3xl font-bold text-gray-800 mb-16 text-center">乐逛工作台</h1>
+      <div class="flex justify-center items-center gap-4" style="margin: 100px;">
+        <div class="relative">
+          <input type="text" id="linkInput" placeholder="请输入自定义链接"
+            class="w-[500px] h-12 px-4 text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+        </div>
+        <button id="redirectButton"
+          class="!rounded-button whitespace-nowrap h-12 px-8 bg-primary text-white hover:bg-primary/90 transition-colors">
+          前往
+        </button>
+      </div>
+      <div class="grid grid-cols-4 gap-8 mb-16" id="linkGrid">
+
+      <!-- <div class="grid grid-cols-4 gap-8 mb-16">
+        <a href="#" class="block group">
+          <div
+            class="bg-white rounded shadow-lg p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col items-center justify-center min-h-[200px]">
+            <i class="fas fa-store text-4xl text-primary mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-800">乐逛官方后台</h3>
+          </div>
+        </a>
+
+        <a href="#" class="block group">
+          <div
+            class="bg-white rounded shadow-lg p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col items-center justify-center min-h-[200px]">
+            <i class="fas fa-industry text-4xl text-primary mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-800">乐逛工厂后台</h3>
+          </div>
+        </a>
+
+        <a href="#" class="block group">
+          <div
+            class="bg-white rounded shadow-lg p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col items-center justify-center min-h-[200px]">
+            <i class="fas fa-truck text-4xl text-primary mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-800">乐逛物流后台</h3>
+          </div>
+        </a>
+
+        <a href="#" class="block group">
+          <div
+            class="bg-white rounded shadow-lg p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col items-center justify-center min-h-[200px]">
+            <i class="fas fa-handshake text-4xl text-primary mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-800">乐逛服务商后台</h3>
+          </div>
+        </a>
+      </div> -->
+
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('redirectButton').addEventListener('click', function() {
+                let url = document.getElementById('linkInput').value.trim();
+                
+                // 检查用户是否输入链接
+                if (!url) {
+                    alert('请输入有效的链接'); // 如果没有输入，弹出提示
+                    return; // 终止后续执行
+                }
+
+                // 自动补全链接
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    if (url.startsWith('www.')) {
+                        url = 'http://' + url; // 以 www. 开头，添加 http://
+                    } else {
+                        url = 'http://www.' + url; // 其他情况，添加 http://www.
+                    }
+                }
+
+                // 跳转到指定链接
+                window.location.href = url;
+            });
+        });
+</script>
+
+
+<script>
+  // 配置后台链接
+  const backendLinks = [
+      { name: '乐逛官方后台', icon: 'fas fa-store', url: 'https://www.leguang.cn/admin/workbench' },
+      { name: '乐逛工厂后台', icon: 'fas fa-industry', url: 'https://www.leguang.cn/factory' },
+      { name: '乐逛物流后台', icon: 'fas fa-truck', url: 'https://www.leguang.cn/delivery'}, 
+      { name: '乐逛服务商后台', icon: 'fas fa-handshake', url: '' },// 没有配置链接
+  ];
+
+  // 动态生成链接卡片
+  const linkGrid = document.getElementById('linkGrid');
+  backendLinks.forEach(link => {
+      const anchor = document.createElement('a');
+      anchor.href = '#';
+      anchor.className = 'block group';
+      anchor.setAttribute('data-url', link.url);
+
+      const card = document.createElement('div');
+      card.className = 'bg-white rounded shadow-lg p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col items-center justify-center min-h-[200px]';
+
+      const icon = document.createElement('i');
+      icon.className = `${link.icon} text-4xl text-primary mb-4`;
+
+      const title = document.createElement('h3');
+      title.className = 'text-xl font-medium text-gray-800';
+      title.textContent = link.name;
+
+      card.appendChild(icon);
+      card.appendChild(title);
+      anchor.appendChild(card);
+      linkGrid.appendChild(anchor);
+  });
+
+  // 点击事件处理
+  document.addEventListener('click', function(event) {
+      if (event.target.closest('.block.group')) {
+          event.preventDefault(); // 防止默认链接行为
+          const url = event.target.closest('.block.group').getAttribute('data-url');
+          if (url) {
+              window.location.href = url; // 跳转到指定链接
+          } else {
+              alert('当前功能暂未开放'); // 弹窗提示
+          }
+      }
+  });
+</script>
